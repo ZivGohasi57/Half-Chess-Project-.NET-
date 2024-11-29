@@ -1,0 +1,44 @@
+﻿@page
+@using FinalProject.Model;
+@using FinalProject.Data;
+@model FinalProject.Pages.GamesModel
+@{
+    ViewData["Title"] = "Games";
+}
+
+<h2>Games</h2>
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>Game ID</th>
+            <th>Start Date</th>
+            <th>End Date</th>
+            <th>Game Duration</th>
+            <th>Moves</th>
+            <th>View Moves</th>
+            <th>Result</th>
+            <th>Delete</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var game in Model.Games)
+        {
+            <tr>
+                <td>@game.GameID</td>
+                <td>@game.StartDate</td>
+                <td>@game.EndDate</td>
+                <td>@game.GameDuration</td>
+                <td>@game.Moves</td>
+                <td>
+                    <a asp-page="/Moves" asp-route-gameId="@game.GameID" class="btn btn-primary">View Moves</a>
+                </td>
+                <td>@game.Result</td>
+                <td>
+                    <form method="post" asp-page-handler="DeleteGame" asp-route-gameId="@game.GameID" style="display:inline;">
+                        <button type="submit" class="btn btn-outline-danger">X</button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

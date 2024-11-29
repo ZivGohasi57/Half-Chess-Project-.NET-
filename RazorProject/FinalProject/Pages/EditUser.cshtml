@@ -1,0 +1,49 @@
+﻿@page
+@model FinalProject.Pages.EditUserModel
+@{
+    ViewData["Title"] = "Edit User";
+}
+
+<h2>Edit User</h2>
+
+@if (!string.IsNullOrEmpty(Model.ErrorMessage))
+{
+
+    <div class="alert alert-danger">
+        @Model.ErrorMessage
+    </div>
+}
+
+<form method="post">
+
+
+    <input type="hidden" asp-for="User.Id" />
+
+    <div class="form-group">
+        <label asp-for="User.Name">Name</label>
+        <input asp-for="User.Name" class="form-control" />
+        <span asp-validation-for="User.Name" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="User.PhoneNumber">Phone Number</label>
+        <input asp-for="User.PhoneNumber" class="form-control" />
+        <span asp-validation-for="User.PhoneNumber" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="User.Country">Country</label>
+        <select asp-for="User.Country" class="form-control">
+            <option value="">Select Country</option>
+            <option value="USA">USA</option>
+            <option value="Canada">Canada</option>
+            <option value="United Kingdom">United Kingdom</option>
+            <option value="Australia">Australia</option>
+            <option value="Israel">Israel</option>
+        </select>
+        <span asp-validation-for="User.Country" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Save Changes</button>
+    <a asp-page="/Users" class="btn btn-secondary">Cancel</a>
+</form>

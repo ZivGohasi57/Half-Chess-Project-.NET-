@@ -1,0 +1,332 @@
+﻿@page
+@using FinalProject.Data;
+@using FinalProject.Model;
+@model FinalProject.Pages.QueryResultsModel
+@{
+    ViewData["Title"] = "Query Results";
+}
+
+<h2>Select an Option</h2>
+
+@if (!string.IsNullOrEmpty(Model.ErrorMessage))
+{
+    <div class="alert alert-danger">
+        @Model.ErrorMessage
+    </div>
+}
+
+<form method="post">
+    <!-- Existing Buttons -->
+    <button type="submit" name="buttonValue" value="1" class="btn btn-primary m-2">Show All Players Who Played</button>
+    <button type="submit" name="buttonValue" value="2" class="btn btn-primary m-2">Show Players with Last Game Date (Descending)</button>
+    <button type="submit" name="buttonValue" value="3" class="btn btn-primary m-2">Show All Games with Details</button>
+    <button type="submit" name="buttonValue" value="4" class="btn btn-primary m-2">Show First Registered Player from Each Country</button>
+    <button type="submit" name="buttonValue" value="5" class="btn btn-primary m-2">Show Games by Selected Player</button>
+
+    <!-- New Buttons in Chronological Order -->
+    <button type="submit" name="buttonValue" value="6" class="btn btn-primary m-2">Show Player and Game Count</button>
+    <button type="submit" name="buttonValue" value="7" class="btn btn-primary m-2">Show Players by Game Count</button>
+    <button type="submit" name="buttonValue" value="8" class="btn btn-primary m-2">Show Players by Country</button>
+    @if (ViewData["ShowComboBox"] != null && (bool)ViewData["ShowComboBox"])
+    {
+        <div class="form-group mt-3">
+            <label for="SelectedPlayer">Select Player:</label>
+            @if ((bool)ViewData["ShowComboBox"])
+            {
+                <label for="SelectedPlayer">Select a Player</label>
+                <select asp-for="SelectedPlayer" class="form-control">
+                    <option value="">-- Select a Player --</option>
+                    @foreach (var name in Model.PlayerNames)
+                    {
+                        <option value="@name">@name</option>
+                    }
+                </select>
+            }
+            <button type="submit" name="buttonValue" value="5" class="btn btn-primary mt-2">Filter by Selected Player</button>
+        </div>
+    }
+</form>
+
+
+<hr />
+
+@if (Model.QueryResults != null && Model.QueryResults.Any())
+{
+    @if (Request.Form["buttonValue"] == "1")
+    {
+        <h3>Players Who Played</h3>
+        <table class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th>User ID</th>
+                    <th>Name</th>
+                    <th>Phone Number</th>
+                    <th>Country</th>
+                    <th>Games Played</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var player in Model.QueryResults)
+                {
+                    <tr>
+                        <td>@player.Id</td>
+                        <td>@player.Name</td>
+                        <td>@player.PhoneNumber</td>
+                        <td>@player.Country</td>
+                        <td>@player.GamesPlayed</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+    else @if (Request.Form["buttonValue"] == "2")
+    {
+        <h3>Players and Last Game Start Date</h3>
+        <table class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Last Game Start Date</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var result in Model.QueryResults)
+                {
+                    <tr>
+                        <td>@result.Name</td>
+                        <td>@result.LastGameStartDate</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+
+    else if (Request.Form["buttonValue"] == "3")
+    {
+        <h3>All Games with Details</h3>
+        <table class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th>Game ID</th>
+                    <th>Player Name</th>
+                    <th>Start Date</th>
+                    <th>End Date</th>
+                    <th>Moves</th>
+                    <th>Result</th>
+                    <th>Game Duration</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var game in Model.QueryResults)
+                {
+                    <tr>
+                        <td>@game.GameID</td>
+                        <td>@game.UserName</td>
+                        <td>@game.StartDate</td>
+                        <td>@game.EndDate</td>
+                        <td>@game.Moves</td>
+                        <td>@game.Result</td>
+                        <td>@game.GameDuration</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+    else if (Request.Form["buttonValue"] == "4")
+    {
+        <h3>First Registered Player from Each Country</h3>
+        <table class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th>Country</th>
+                    <th>First Player</th>
+                    <th>Registration Date</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var representative in Model.QueryResults)
+                {
+                    <tr>
+                        <td>@representative.Country</td>
+                        <td>@representative.FirstPlayer</td>
+                        <td>@representative.FirstRegisteritionDate.ToString("yyyy-MM-dd HH:mm:ss")</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+        @if (Request.Form["buttonValue"] == "6")
+        {
+            <h3>Games for Selected Player</h3>
+            <table class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th>Game ID</th>
+                        <th>Start Date</th>
+                        <th>End Date</th>
+                        <th>Winner</th>
+                        <th>Game Duration</th>
+                        <th>Moves</th>
+                        <th>Draw</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var game in Model.QueryResults)
+                    {
+                        <tr>
+                            <td>@game.GameID</td>
+                            <td>@game.StartDate</td>
+                            <td>@game.EndDate</td>
+                            <td>@game.GameDuration</td>
+                            <td>@game.Moves</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+    }
+    else if (Request.Form["buttonValue"] == "7")
+    {
+        <h3>Players Grouped by Game Count </h3>
+        <br />
+        @foreach (var group in Model.QueryResults.OrderByDescending(g => g.GameCount)) 
+        {
+            <h4>@group.GameCount Games </h4>
+            <table class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th>Player ID</th>
+                        <th>Name</th>
+                        <th>Phone Number</th>
+                        <th>Country</th>
+                        <th>Games Played</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var player in group.Players)
+                    {
+                        <tr>
+                            <td>@player.Id</td>
+                            <td>@player.Name</td>
+                            <td>@player.PhoneNumber</td>
+                            <td>@player.Country</td>
+                            <td>@player.GamesPlayed</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+    }
+
+    else if (Request.Form["buttonValue"] == "8")
+    {
+        <h3>Players Grouped by Country</h3>
+        @foreach (var countryGroup in Model.QueryResults)
+        {
+            <h4>@countryGroup.Country</h4>
+            <table class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th>User ID</th>
+                        <th>Name</th>
+                        <th>Phone Number</th>
+                        <th>Games Played</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var player in countryGroup.Players)
+                    {
+                        <tr>
+                            <td>@player.Id</td>
+                            <td>@player.Name</td>
+                            <td>@player.PhoneNumber</td>
+                            <td>@player.GamesPlayed</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+    }
+       else if (Request.Form["buttonValue"] == "5" && !string.IsNullOrEmpty(Model.SelectedPlayer))
+    {
+        <h3>Games for Selected Player: @Model.SelectedPlayer</h3>
+        <table class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th>Player Name</th>
+                    <th>Total Games</th>
+                    <th>Total Moves</th>
+                    <th>Game Details</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <!-- Player Name -->
+                    <td>@Model.SelectedPlayer</td>
+    
+                    <!-- Total Games -->
+                    <td>@Model.QueryResults.Count(q => q.PlayerName.ToLower() == Model.SelectedPlayer.ToLower())</td>
+    
+                    <!-- Total Moves -->
+                    <td>@Model.QueryResults.Where(q => q.PlayerName.ToLower() == Model.SelectedPlayer.ToLower()).Sum(q => q.Moves ?? 0)</td>
+    
+                    <!-- Game Details -->
+                    <td>
+                        <table class="table table-sm table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Game ID</th>
+                                    <th>Start Date</th>
+                                    <th>End Date</th>
+                                    <th>Game Duration</th>
+                                    <th>Moves</th>
+                                    <th>Result</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var game in Model.QueryResults.Where(q => q.PlayerName.ToLower() == Model.SelectedPlayer.ToLower())) 
+                                {
+                                    <tr>
+                                        <td>@game.GameID</td>
+                                        <td>@game.StartDate?.ToShortDateString()</td>
+                                        <td>@(game.EndDate?.ToShortDateString() ?? "N/A")</td>
+                                        <td>@game.GameDuration</td>
+                                        <td>@game.Moves</td>
+                                        <td>@game.Result</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    }
+    
+    else if (Request.Form["buttonValue"] == "6")
+    {
+        <h3>Players and Game Count</h3>
+        <table class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th>User Name</th>
+                    <th>Games Played</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var user in Model.QueryResults)
+                {
+                    <tr>
+                        <td>@user.UserName</td>
+                        <td>@user.GamesPlayed</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+
+
+}
+else
+{
+    <p>No results found.</p>
+}

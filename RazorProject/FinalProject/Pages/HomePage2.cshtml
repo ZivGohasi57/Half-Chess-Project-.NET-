@@ -1,0 +1,77 @@
+﻿@page
+@using FinalProject.Model;
+@using FinalProject.Data;
+@model FinalProject.Pages.HomePage2Model
+@{
+    ViewData["Title"] = "Welcome to the Game Portal";
+}
+
+<div class="container">
+    <div class="user-info">
+        <span>@Model.UserName</span>
+        <div class="dropdown">
+            <button class="btn btn-outline-primary dropdown-toggle" type="button" id="menuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                ☰
+            </button>
+            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="menuButton">
+                <li><a class="dropdown-item" asp-page="/EditUser">Edit User</a></li>
+                <li>
+                    <form method="post" asp-page-handler="DeleteUser" style="display: inline;"> 
+                        <button type="submit" class="dropdown-item text-danger">Delete User</button> 
+                    </form>
+                </li>
+
+                <li>
+                    <form method="post" asp-page-handler="Logout" style="display: inline;">
+                        <button type="submit" class="dropdown-item text-danger">Logout</button>
+                    </form>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="text-center">
+        <h1 class="display-4">Chess Game</h1>
+    </div>
+
+    <br />
+    <br />
+    <br />
+
+    <!-- Main buttons -->
+    <div class="main-content">
+        <h1 style="font-size: 3em; font-weight: bold; color: green; cursor: pointer;" onclick="this.closest('form').submit();">
+            NOW YOU CAN PLAY
+        </h1>
+
+        <br />
+        <br />
+        <a class="btn btn-outline-primary" asp-page="/Games">Games</a> 
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script> 
+
+
+<style>
+    .container {
+        text-align: center;
+        margin-top: 30px;
+    }
+
+    .user-info {
+        position: absolute;
+        top: 10px;
+        right: 20px;
+        text-align: center;
+    }
+
+        .user-info span {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+    .main-content button {
+        margin: 10px;
+    }
+</style>

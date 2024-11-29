@@ -1,0 +1,37 @@
+﻿@page "/Moves/{gameId:int}"
+@using FinalProject.Model;
+@using FinalProject.Data;
+@model FinalProject.Pages.MovesModel
+@{
+}
+
+<h1>Moves</h1>
+
+
+
+
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Move ID</th>
+            <th>Piece</th>
+            <th>From Position</th>
+            <th>To Position</th>
+            <th>Time Taken</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (TblMoves move in Model.Moves)
+        {
+            <tr>
+                <td>@move.MoveId</td>
+                <td>@move.PieceType</td>
+                <td>@move.FromPosition</td>
+                <td>@move.ToPosition</td>
+                <td>@move.TimeTaken</td>
+            </tr>
+        }
+    </tbody>
+</table>

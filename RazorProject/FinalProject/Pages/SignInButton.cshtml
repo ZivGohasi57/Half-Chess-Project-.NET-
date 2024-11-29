@@ -1,0 +1,84 @@
+﻿@page
+@model FinalProject.Pages.SignInButtonModel
+@{
+    ViewData["Title"] = "Sign Up";
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>@ViewData["Title"] - Sign Up</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="~/css/site.css">
+    <style>
+        /* Style for the green-bordered rectangle */
+        .sign-Up-container {
+            border: 2px solid green; /* Green border */
+            padding: 20px; /* Padding inside the rectangle */
+            border-radius: 8px; /* Rounded corners */
+            max-width: 400px; /* Width of the form container */
+            margin: auto; /* Centering the container */
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container mt-5">
+        <div class="sign-Up-container">
+            <h2 class="text-center">Sign Up</h2>
+
+            <form method="post">
+                <table class="table table-borderless">
+                    <tbody>
+                        <tr>
+                            <th>Id</th>
+                            <td><input type="number" class="form-control" name="Id" min="1" max="1000" required /></td>
+                        </tr>
+                        <tr>
+                            <th>User Name</th>
+                            <td><input type="text" class="form-control" name="Name" required /></td>
+                        </tr>
+                        <tr>
+                            <th>Phone Number</th>
+                            <td><input type="text" class="form-control" name="PhoneNumber" required /></td>
+                        </tr>
+                        <tr>
+                            <th>Country</th>
+                            <td>
+                                <select name="Country" class="form-control" required>
+                                    <option value="">Select Country</option>
+                                    <option value="USA">USA</option>
+                                    <option value="Canada">Canada</option>
+                                    <option value="United Kingdom">United Kingdom</option>
+                                    <option value="Australia">Australia</option>
+                                    <option value="Israel">Israel</option>
+                                    <!-- Add more countries as needed -->
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                        <tr>
+                            <th>Password</th>
+                            <td>
+                                <input type="password" class="form-control" name="Password" id="Password" required
+                                       maxlength="8"
+                                       pattern="^[A-Z][A-Za-z0-9]{0,7}$"
+                                       title="The password must start with an uppercase letter, be in English (letters and numbers), and contain up to 8 characters." />
+                            </td>
+                        </tr>
+                        </tr>
+
+                    </tbody>
+                </table>
+
+                <div class="text-center">
+                    <button type="submit" class="btn btn-primary mt-3">Sign Up</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

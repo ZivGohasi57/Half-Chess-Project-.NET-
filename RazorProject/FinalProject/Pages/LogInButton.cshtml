@@ -1,0 +1,69 @@
+﻿@page
+@model FinalProject.Pages.LogInButtonModel
+@{
+    ViewData["Title"] = "Log In";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>@ViewData["Title"] - Log in</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="~/css/site.css">
+    <style>
+        .Log-In-container {
+            border: 2px solid green;
+            padding: 20px;
+            border-radius: 8px;
+            max-width: 400px;
+            margin: auto;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container mt-5">
+        <div class="Log-In-container">
+            <h2 class="text-center">Log In</h2>
+
+            @if (!ViewData.ModelState.IsValid)
+            {
+                <div class="alert alert-danger" role="alert">
+                    @foreach (var error in ViewData.ModelState.Values.SelectMany(v => v.Errors))
+                    {
+                        <p>@error.ErrorMessage</p>
+                    }
+                </div>
+            }
+
+            <form method="post">
+                <table class="table table-borderless">
+                    <tbody>
+                        <tr>
+                            <th>User ID</th>
+                            <td><input type="number" class="form-control" name="Id" required /></td>
+                        </tr>
+                        <tr>
+                            <th>Password</th>
+                            <td>
+                                <input type="password" class="form-control" name="Password" id="Password" required
+                                       maxlength="8"
+                                       pattern="^[A-Z][A-Za-z0-9]{0,7}$"
+                                       title="The password must start with an uppercase letter, be in English (letters and numbers), and contain up to 8 characters." />
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="text-center">
+                    <button type="submit" class="btn btn-primary mt-3">Log In</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,37 @@
+﻿@page
+@using FinalProject.Model;
+@using FinalProject.Data;
+@model FinalProject.Pages.UsersModel
+@{
+}
+
+<h1>Users</h1>
+
+
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Name</th>
+            <th>Phone Number</th>
+            <th>Country</th>
+            <th>Registerition Date</th>
+            <th>Games Played</th>
+
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (TblUsers user in Model.Users)
+        {
+            <tr>
+                <td>@user.Id</td>
+                <td>@user.Name</td>
+                <td>@user.PhoneNumber</td>
+                <td>@user.Country</td>
+                <td>@user.RegisteritionDate</td>
+                <td>@user.GamesPlayed</td>
+
+            </tr>
+        }
+    </tbody>
+</table>
